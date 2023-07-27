@@ -1,5 +1,6 @@
 let allData = [];
-
+const itemsPerPage = 2;
+let currentPage = 1;
 function getDataAndDisplay() {
   const username = "ck_0dfda3ddc8cec461045067826a6cc34622992dac";
   const password = "cs_9429729612e4774580b1a553833e1d6a3c454ec2";
@@ -38,9 +39,7 @@ getDataAndDisplay()
   });
 
 function removeAccents(str) {
-  return str
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 function search() {
   const searchTerm = removeAccents(searchInput.value.toLowerCase());
@@ -58,23 +57,25 @@ function search() {
       item.price >= minPrice &&
       item.price <= maxPrice
   );
-
   displayResults(filteredData);
+  createPaginationControls(filteredData.length);
 }
 
 function displayResults(results) {
   const searchResults = $("#searchResults");
   searchResults.empty();
-  results.forEach((item) => {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = currentPage * itemsPerPage;
+  const itemsForCurrentPage = results.slice(startIndex, endIndex);
+
+  itemsForCurrentPage.forEach((item) => {
     const card = $("<div>").addClass("card");
 
     const nameHeading = $("<h2>").text(item.name);
-
     const priceParagraph = $("<p>").text("Price: $" + item.price);
-
+    const categories = item.categories.map((category) => category.name);
     const categoriesParagraph = $("<p>").text(
-      "Categories: " +
-        item.categories.map((category) => category.name).join(", ")
+      "Categories: " + categories.join(", ")
     );
 
     const imageContainer = $("<div>").addClass("image-container");
@@ -88,8 +89,39 @@ function displayResults(results) {
       priceParagraph,
       categoriesParagraph
     );
+    createPaginationControls(results.length);
     searchResults.append(card);
   });
+}
+
+function createPaginationControls(totalItems) {
+  const paginationContainer = $("#paginationContainer");
+  paginationContainer.empty();
+
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const prevButton = $("<button>")
+    .text("Previous")
+    .prop("disabled", currentPage === 1);
+  prevButton.on("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      search();
+    }
+  });
+
+  const nextButton = $("<button>")
+    .text("Next")
+    .prop("disabled", currentPage === totalPages);
+  nextButton.on("click", () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      search();
+    }
+  });
+
+  const pageInfo = $("<span>").text(`Page ${currentPage} of ${totalPages}`);
+
+  paginationContainer.append(prevButton, pageInfo, nextButton);
 }
 
 function updateCategoryDropdown() {
