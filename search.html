@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Search</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div class="container">
     <h1>My Product</h1>
@@ -19,7 +21,7 @@
       <input type="number" id="priceMin" min="0" step="1" />
       <label for="priceMax">Max Price:</label>
       <input type="number" id="priceMax" min="0" step="1" />
-  
+
       <button id="priceFilterButton">Filter</button>
     </div>
 
@@ -27,7 +29,14 @@
       <div class="cards" id="searchResults"></div>
     </div>
   </div>
-  <script src="./lib/jquery-3.7.0.min.js" ></script>
+  <!-- <script src="./lib/jquery-3.7.0.min.js" ></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
+    integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="search.js"></script>
 </body>
+
 </html>
