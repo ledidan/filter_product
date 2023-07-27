@@ -2,8 +2,8 @@ let allData = [];
 const itemsPerPage = 2;
 let currentPage = 1;
 function getDataAndDisplay() {
-  const username = "ck_0dfda3ddc8cec461045067826a6cc34622992dac";
-  const password = "cs_9429729612e4774580b1a553833e1d6a3c454ec2";
+  const username = "";
+  const password = "";
   const authString = `${username}:${password}`;
   const encodedAuth = btoa(authString);
   const apiUrl = "https://sc.gaco.vn/wp-json/wc/v3/products";
